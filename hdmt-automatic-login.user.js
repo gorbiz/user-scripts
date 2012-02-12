@@ -1,8 +1,9 @@
 // ==UserScript==
-// @name           Better hdmt
-// @namespace      http://www.passionismandatory.com/userscripts/betterhdmt
+// @name           HDMT automatic login
+// @namespace      http://www.passionismandatory.com/userscripts/hdmt-automatic-login
 // @include        http://hdmt.net/*
-// @match        http://hdmt.net/*
+// @match          http://hdmt.net/*
+// @description    Automatically logs you in after you have loged in once manually. Warning: This is not secure, your password will be stored in a cookie.
 // ==/UserScript==
 
 
@@ -27,19 +28,19 @@ function getCookie(c_name) {
 }
 
 function loggedin() {
+	// Believe to be loged in if on a page that plays a movie or a show.
+	// This isn't correct, but that page doesn't contain any "Logout" links and as long as you click your way to this page everything will be fine. A case of good enough for now.
+	if (document.URL.indexOf("movieplay.php") != -1 || document.URL.indexOf("tvplay.php") != -1) {
+		return true;
+	}
 	var anchors = document.getElementsByTagName("a");
 	for(var i = 0; i < anchors.length; i++) {
-		if(anchors[i].innerHTML == "Logout") {
+		if(anchors[i].innerHTML.indexOf("Logout") != -1) {
 			return true;
 		}
 	}
 	return false;
 }
-
-/**
- * Autofocus the search field
- */
-document.getElementsByName("keyword")[0].focus();
 
 /**
  * WARNING This is BAD security but it is very convenient ;)
