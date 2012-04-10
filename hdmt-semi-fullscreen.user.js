@@ -25,7 +25,14 @@ function main() {
 	function toggle_semi_fullscreen() {
 		$('#player').attr('style', ($('#player').css('position') != 'absolute') ? 'display:block; position:absolute; left:1px; top:0; width:' + ($(window).width() - 1) + 'px; height:100%;' : 'display:block;');
 	}
-	toggle_semi_fullscreen();
+	
+    $(window).resize(function() {
+        toggle_semi_fullscreen();
+        toggle_semi_fullscreen();
+    });
+    
+    toggle_semi_fullscreen();
+    
 	$('body').append('<div id="semi-trigger" style="background:black; position:absolute; left:0; top:0; left:0; width: 1px; height: 100%;"></div>');
 	$('#semi-trigger').hover(
 		function () { toggle_semi_fullscreen(); },
